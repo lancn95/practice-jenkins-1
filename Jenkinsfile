@@ -2,12 +2,12 @@ pipeline {
 
     agent any
 
-
+    environment {
+              NAME: Kevin
+              LASTNAME: CAT NGOC LAN
+            }
     stages {
-        environment {
-          NAME: Kevin
-          LASTNAME: CAT NGOC LAN
-        }
+
         stage('Build Info'){
             steps {
                 sh 'echo $NAME $LASTNAME'
