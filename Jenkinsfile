@@ -45,7 +45,11 @@ pipeline {
                 DOCKERHUB_CREDENTIALS = credentials('credential-dockerhub')
             }      	
             steps{          
-                sh "docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}"             	
+                withDockerRegistry(credentialsId: 'credential-dockerhub', url: 'https://index.docker.io/v1/') {
+                    // sh 'docker build -t khaliddinh/springboot .'
+                    // sh 'docker push khaliddinh/springboot'
+                }
+                // sh 'docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}'             	
                 // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                		
                 echo 'Login Completed'      
             }           
