@@ -54,6 +54,7 @@ pipeline {
                 sh 'docker logout'
                 withDockerRegistry(credentialsId: 'credential-dockerhub', url: 'https://index.docker.io/v1/') {
                     sh 'docker build -t lancn1/springboot-jenkins:$BUILD_NUMBER .'
+                    sh 'docker tag $BUILD_NUMBER lancn1/springboot-jenkins'
                     sh 'docker push lancn1/springboot-jenkins:$BUILD_NUMBER'
                 }
                                		
