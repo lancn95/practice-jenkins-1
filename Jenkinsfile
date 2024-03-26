@@ -20,7 +20,7 @@ pipeline {
 
             steps {
                 withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
-                    sh 'docker build -t cnlan1/springboot .'
+                    sh '/usr/local/bin/docker build -t cnlan1/springboot .'
                     sh 'docker push cnlan1/springboot'
                 }
             }
