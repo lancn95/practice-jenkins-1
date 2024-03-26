@@ -38,7 +38,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             environment {
-                BUILD_NUMBER = '1'
+                BUILD_NUMBER = 'v1'
             }
             steps{
                 sh 'docker build -t lancn1/springboot-jenkins:$BUILD_NUMBER .'
@@ -46,11 +46,14 @@ pipeline {
             }
         }
         stage('Login to Docker Hub') {
-     	        
+     	    environment {
+                BUILD_NUMBER = 'v1'
+            }
             steps{          
                 // This step should not normally be used in your script. Consult the inline help for details.
                 withDockerRegistry(credentialsId: 'credential-dockerhub', url: 'https://index.docker.io/v1/') {
-                    sh 'docker push lancn1/springboot-jenkins:1'
+                    sh 'docker build -t lancn1/springboot-jenkins:$BUILD_NUMBER .'
+                    sh 'docker push lancn1/springboot-jenkins:$BUILD_NUMBER'
                 }
                                		
                 echo 'Login Completed'      
