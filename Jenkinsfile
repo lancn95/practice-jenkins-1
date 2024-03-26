@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     stages {
-        stage('Example Username/Password') {
-            environment {
-                SERVICE_CREDS = credentials('credential-github')
-            }
-            steps {
-                sh 'echo "Service user is $SERVICE_CREDS_USR"'
-                sh 'echo "Service password is $SERVICE_CREDS_PSW"'
-            }
-        }
+        // stage('Example Username/Password') {
+        //     environment {
+        //         SERVICE_CREDS = credentials('credential-github')
+        //     }
+        //     steps {
+        //         sh 'echo "Service user is $SERVICE_CREDS_USR"'
+        //         sh 'echo "Service password is $SERVICE_CREDS_PSW"'
+        //     }
+        // }
         stage("Git Checkout"){  
             steps{     
 	            git credentialsId: 'credential-github', url: 'https://github.com/lancn95/practice-jenkins-1'
@@ -26,6 +26,15 @@ pipeline {
                 echo 'Build Image Completed'
             }
         }
+        stage('Login to Docker Hub') {
+            environment {
+                DOCKERHUB_CREDENTIALS = credentials('credential-dockerhub')
+            }      	
+            steps{                       	
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                		
+                echo 'Login Completed'      
+            }           
+        }  
     }
     post {
         success {
