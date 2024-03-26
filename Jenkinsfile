@@ -46,14 +46,11 @@ pipeline {
             }
         }
         stage('Login to Docker Hub') {
-            environment {
-                DOCKERHUB_CREDENTIALS = credentials('credential-dockerhub')
-            }      	
-        
+     	        
             steps{          
                 // This step should not normally be used in your script. Consult the inline help for details.
-                withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
-                    sh 'docker push lancn1/springboot-jenkins:$BUILD_NUMBER'
+                withDockerRegistry(credentialsId: 'credential-dockerhub', url: 'https://index.docker.io/v1/') {
+                    sh 'docker push lancn1/springboot-jenkins:1'
                 }
                                		
                 echo 'Login Completed'      
