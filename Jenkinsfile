@@ -12,10 +12,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo ${DOCKER_IMAGE_NAME}
-                echo ${MAVEN_HOME}
-                echo ${DOCKER_HOME}
-                echo ${DOCKERFILE_PATH}
+                echo "${DOCKER_IMAGE_NAME}"
+                echo "${MAVEN_HOME}"
+                echo "${DOCKER_HOME}"
+                echo "${DOCKERFILE_PATH}"
             }
         }
 
