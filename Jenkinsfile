@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_REGISTRY_CREDENTIALS = credentials('docker-hub-credentials') // Add Docker Hub credentials
-        DOCKER_IMAGE_NAME = "yourdockerhubusername/yourimage" // Define your Docker image name
+        DOCKER_IMAGE_NAME = "lancn1/springboot" // Define your Docker image name
         DOCKERFILE_PATH = "./Dockerfile" // Path to your Dockerfile
         MAVEN_HOME = tool 'Maven' // Use Maven tool installed in Jenkins
         DOCKER_HOME = tool 'Docker' // Use Docker tool installed in Jenkins
@@ -12,7 +12,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo ${DOCKER_REGISTRY_CREDENTIALS}
+                echo ${DOCKER_IMAGE_NAME}
+                echo ${MAVEN_HOME}
+                echo ${DOCKER_HOME}
+                echo ${DOCKERFILE_PATH}
             }
         }
 
