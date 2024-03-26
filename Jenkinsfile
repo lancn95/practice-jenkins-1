@@ -22,7 +22,7 @@ pipeline {
                 BUILD_NUMBER = '1'
             }
             steps{
-                sh 'sudo docker build -t lancn1/springboot-jenkins:$BUILD_NUMBER .'
+                sh 'docker build -t lancn1/springboot-jenkins:$BUILD_NUMBER .'
                 echo 'Build Image Completed'
             }
         }
