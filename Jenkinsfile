@@ -58,7 +58,7 @@ pipeline {
                     sh 'docker image ls'
                     // sh 'docker tag $BUILD_NUMBER lancn1/springboot-jenkins'
                     // sh 'docker push lancn1/springboot-jenkins'
-                    // sh 'docker tag springboot-jenkins:latest lancn1/springboot-jenkins:latest'
+                    sh 'docker tag 20240326 lancn1/springboot-jenkins:latest'
                     sh 'docker image push lancn1/springboot-jenkins:latest'
                 }
                                		
