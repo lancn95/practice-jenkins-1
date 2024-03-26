@@ -42,7 +42,7 @@ pipeline {
                 script {
                     // Log in to Docker Hub
                     withCredentials([string(credentialsId: DOCKER_REGISTRY_CREDENTIALS, variable: 'DOCKER_PASSWORD')]) {
-                        sh "${DOCKER_HOME}/bin/docker login -u ${DOCKER_REGISTRY_CREDENTIALS_USR} -p ${DOCKER_PASSWORD}"
+                        sh "${DOCKER_HOME}/bin/docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
                     }
                     // Push Docker image to Docker Hub
                     sh "${DOCKER_HOME}/bin/docker push ${DOCKER_IMAGE_NAME}"
