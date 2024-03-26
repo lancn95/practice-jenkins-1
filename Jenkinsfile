@@ -51,8 +51,8 @@ pipeline {
             }      	
         
             steps{          
-                withDockerRegistry(credentialsId: 'credential-dockerhub', url: 'https://index.docker.io/v1/') {
-                    // sh 'docker build -t khaliddinh/springboot .'
+                // This step should not normally be used in your script. Consult the inline help for details.
+                withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
                     sh 'docker push lancn1/springboot-jenkins:$BUILD_NUMBER'
                 }
                                		
