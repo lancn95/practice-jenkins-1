@@ -2,9 +2,7 @@ pipeline {
 
     agent any
 
-    environment {
-        MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
-    }
+
     stages {
 
         stage('Build with Gradle') {
