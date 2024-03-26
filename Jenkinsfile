@@ -4,7 +4,16 @@ pipeline {
 
 
     stages {
+        environment {
+          NAME: Kevin
+          LASTNAME: CAT NGOC LAN
+        }
+        stage('Build Info'){
+            steps {
+                sh 'echo $NAME $LASTNAME'
 
+            }
+        }
         stage('Build with Gradle') {
             steps {
                 sh 'chmod +x gradlew'
