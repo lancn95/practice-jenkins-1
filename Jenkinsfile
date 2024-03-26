@@ -51,6 +51,7 @@ pipeline {
             }
             steps{          
                 // This step should not normally be used in your script. Consult the inline help for details.
+                sh 'docker logout'
                 withDockerRegistry(credentialsId: 'credential-dockerhub', url: 'https://index.docker.io/v1/') {
                     sh 'docker build -t lancn1/springboot-jenkins:$BUILD_NUMBER .'
                     sh 'docker push lancn1/springboot-jenkins:$BUILD_NUMBER'
