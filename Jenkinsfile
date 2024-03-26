@@ -3,8 +3,8 @@ pipeline {
     agent any
 
     environment {
-              NAME: Kevin
-              LASTNAME: CAT NGOC LAN
+              NAME: 'Kevin'
+              LASTNAME: 'CAT NGOC LAN'
             }
     stages {
 
