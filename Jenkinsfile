@@ -1,7 +1,9 @@
 pipeline {
 
     agent any
-
+    tools {
+            maven 'my-gradle'
+        }
     environment {
         MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
     }
