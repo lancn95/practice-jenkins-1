@@ -49,15 +49,23 @@ pipeline {
             environment {
                 DOCKERHUB_CREDENTIALS = credentials('credential-dockerhub')
             }      	
-            steps{          
-                withDockerRegistry(credentialsId: 'credential-dockerhub', url: 'https://index.docker.io/v1/') {
+            script {
+                    // Log in to Docker Hub
+                    withCredentials([string(credentialsId: DOCKERHUB_CREDENTIALS, variable: 'DOCKER_PASSWORD')]) {
+                        sh "docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PASSWORD}"
+                    }
+                    // Push Docker image to Docker Hub
+                    // sh "${DOCKER_HOME}/bin/docker push ${DOCKER_IMAGE_NAME}"
+                }
+            // steps{          
+                // withDockerRegistry(credentialsId: 'credential-dockerhub', url: 'https://index.docker.io/v1/') {
                     // sh 'docker build -t khaliddinh/springboot .'
                     // sh 'docker push khaliddinh/springboot'
-                }
+                // }
                 // sh 'docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}'             	
                 // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                		
-                echo 'Login Completed'      
-            }           
+                // echo 'Login Completed'      
+            // }           
         }  
     }
     post {
