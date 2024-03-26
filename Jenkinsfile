@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'my-maven-3.9.6' 
+    }
     stages {
         // stage('Example Username/Password') {
         //     environment {
@@ -11,10 +13,17 @@ pipeline {
         //         sh 'echo "Service password is $SERVICE_CREDS_PSW"'
         //     }
         // }
-        stage("Git Checkout"){  
-            steps{     
-	            git credentialsId: 'credential-github', url: 'https://github.com/lancn95/practice-jenkins-1'
-	            echo 'Git Checkout Completed'   
+        // stage("Git Checkout"){  
+        //     steps{     
+	    //         git credentialsId: 'credential-github', url: 'https://github.com/lancn95/practice-jenkins-1'
+	    //         echo 'Git Checkout Completed'   
+        //     }
+        // }
+        stage('Build with Maven') {
+            steps {
+                sh 'mvn --version'
+                sh 'java -version'
+                sh 'mvn clean package -Dmaven.test.failure.ignore=true'
             }
         }
         stage('Build Docker Image') {
