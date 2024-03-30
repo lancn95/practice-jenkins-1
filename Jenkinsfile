@@ -59,12 +59,12 @@ pipeline {
             steps{          
                 // This step should not normally be used in your script. Consult the inline help for details.
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
-                    sh 'docker build -t lancn1/springboot-jenkins:latest .'
+                    sh 'docker build -t lancn1/springboot-jenkins .'
                     sh 'docker image ls'
                     // sh 'docker tag $BUILD_NUMBER lancn1/springboot-jenkins'
                     // sh 'docker push lancn1/springboot-jenkins'
-                    sh 'docker tag lancn1/springboot-jenkins lancn1/springboot-jenkins:latest'
-                    sh 'docker image push lancn1/springboot-jenkins:latest'
+                    sh 'docker tag lancn1/springboot-jenkins lancn1/springboot-jenkins'
+                    sh 'docker image push lancn1/springboot-jenkins'
                 }
                                		
                 echo 'Login Completed'      
