@@ -28,9 +28,12 @@ pipeline {
             }
         }
         stage('Show image tag'){
-            environment {
-                IMAGE_TAG = $(echo build_$(echo `date -d '+7 hours' +%F`)_$(echo `date -d '+7 hours' +%T`) | awk ' { gsub (":", ".")} 1 ')
-            }
+            steps {
+                script {
+                    def now = new Date()
+                    println now.format("yyMMdd.HHmm", TimeZone.getTimeZone('UTC'))
+                }
+            } 
             // steps {
             //     sh 'curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.04.0-ce.tgz \
             //         && tar xzvf docker-17.04.0-ce.tgz \
