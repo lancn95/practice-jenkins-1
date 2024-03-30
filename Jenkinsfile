@@ -2,7 +2,6 @@ pipeline {
     agent any
     tools {
         maven 'my-maven-3.9.6' 
-        docker 'my-docker'
     }
     stages {
         // stage('Example Username/Password') {
@@ -42,9 +41,9 @@ pipeline {
             //     sh 'docker --version'
             //     echo 'Install Docker Completed'
             // }
-            steps {
-                echo '$IMAGE_TAG'
-            }
+            // steps {
+            //     echo '$IMAGE_TAG'
+            // }
         }
         stage('Build Docker Image') {
             environment {
