@@ -2,6 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'my-maven-3.9.6' 
+        docker 'my-docker'
     }
     stages {
         // stage('Example Username/Password') {
@@ -26,14 +27,20 @@ pipeline {
                 sh 'mvn clean package -Dmaven.test.failure.ignore=true'
             }
         }
-        stage('Install Docker'){
+        stage('Show image tag'){
+            environment {
+                IMAGE_TAG = $(echo build_$(echo `date -d '+7 hours' +%F`)_$(echo `date -d '+7 hours' +%T`) | awk ' { gsub (":", ".")} 1 ')
+            }
+            // steps {
+            //     sh 'curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.04.0-ce.tgz \
+            //         && tar xzvf docker-17.04.0-ce.tgz \
+            //         && mv docker/docker /usr/local/bin \
+            //         && rm -r docker docker-17.04.0-ce.tgz'
+            //     sh 'docker --version'
+            //     echo 'Install Docker Completed'
+            // }
             steps {
-                sh 'curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.04.0-ce.tgz \
-                    && tar xzvf docker-17.04.0-ce.tgz \
-                    && mv docker/docker /usr/local/bin \
-                    && rm -r docker docker-17.04.0-ce.tgz'
-                sh 'docker --version'
-                echo 'Install Docker Completed'
+                echo '$IMAGE_TAG'
             }
         }
         stage('Build Docker Image') {
