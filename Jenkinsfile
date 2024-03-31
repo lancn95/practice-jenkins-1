@@ -26,11 +26,16 @@ pipeline {
                 sh 'mvn clean package -Dmaven.test.failure.ignore=true'
             }
         }
+        stage('SonarQube Quality Check') {
+            withSonarQubeEnv(installationName: 'sonar-community', credentialsId: 'jenkins-sonar-token') {
+            sh 'mvn sonar:sonar'
+            } // submitted SonarQube taskId is automatically attached to the pipeline context
+        }
         stage('Show image tag'){
             steps {
                 script {
                     def now = new Date()
-                    println now.format("yyMMdd.HHmm", TimeZone.getTimeZone('UTC'))
+                    println now.format("yyyyMMdd.HHmmss", TimeZone.getTimeZone('UTC'))
                 }
                 sh 'curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.04.0-ce.tgz \
                     && tar xzvf docker-17.04.0-ce.tgz \
@@ -52,32 +57,33 @@ pipeline {
             // }
         }
         stage('Build Docker Image') {
-            environment {
-                BUILD_NUMBER = 'v1'
-            }
+            // environment {
+            //     BUILD_NUMBER = 'v1'
+            // }
             steps{
-                sh 'docker build -t lancn1/springboot-jenkins:$BUILD_NUMBER .'
+                // sh 'docker build -t lancn1/springboot-jenkins:$BUILD_NUMBER .'
+                sh 'docker build -t lancn1/springboot-jenkins .'
                 echo 'Build Image Completed'
             }
         }
-        stage('Login to Docker Hub') {
-     	    environment {
-                BUILD_NUMBER = 'v1'
-            }
-            steps{          
-                // This step should not normally be used in your script. Consult the inline help for details .
-                withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
-                    sh 'docker build -t lancn1/springboot-jenkins .'
-                    sh 'docker image ls'
-                    // sh 'docker tag $BUILD_NUMBER lancn1/springboot-jenkins'
-                    // sh 'docker push lancn1/springboot-jenkins'
-                    sh 'docker tag lancn1/springboot-jenkins lancn1/springboot-jenkins'
-                    sh 'docker image push lancn1/springboot-jenkins'
-                }
+        // stage('Login to Docker Hub') {
+     	//     environment {
+        //         BUILD_NUMBER = 'v1'
+        //     }
+        //     steps{          
+        //         // This step should not normally be used in your script. Consult the inline help for details .
+        //         withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
+        //             sh 'docker build -t lancn1/springboot-jenkins .'
+        //             sh 'docker image ls'
+        //             // sh 'docker tag $BUILD_NUMBER lancn1/springboot-jenkins'
+        //             // sh 'docker push lancn1/springboot-jenkins'
+        //             sh 'docker tag lancn1/springboot-jenkins lancn1/springboot-jenkins'
+        //             sh 'docker image push lancn1/springboot-jenkins'
+        //         }
                                		
-                echo 'Login Completed'      
-            }           
-        }  
+        //         echo 'Login Completed'      
+        //     }           
+        // }  
     }
     post {
         success {
