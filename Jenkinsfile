@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh 'mvn --version'
                 sh 'java -version'
-                sh 'mvn clean package -Dmaven.test.failure.ignore=true'
+                sh 'mvn clean package'
             }
         }
         stage('SonarQube Quality Check') {
@@ -35,19 +35,19 @@ pipeline {
                     }
                 }
             }
-        stage('Show image tag'){
-            steps {
-                script {
-                    def now = new Date()
-                    println now.format("yyyyMMdd.HHmmss", TimeZone.getTimeZone('UTC'))
-                }
-                sh 'curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.04.0-ce.tgz \
-                    && tar xzvf docker-17.04.0-ce.tgz \
-                    && mv docker/docker /usr/local/bin \
-                    && rm -r docker docker-17.04.0-ce.tgz'
-                sh 'docker --version'
-                echo 'Install Docker Completed'
-            } 
+        // stage('Show image tag'){
+        //     steps {
+        //         script {
+        //             def now = new Date()
+        //             println now.format("yyyyMMdd.HHmmss", TimeZone.getTimeZone('UTC'))
+        //         }
+        //         sh 'curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.04.0-ce.tgz \
+        //             && tar xzvf docker-17.04.0-ce.tgz \
+        //             && mv docker/docker /usr/local/bin \
+        //             && rm -r docker docker-17.04.0-ce.tgz'
+        //         sh 'docker --version'
+        //         echo 'Install Docker Completed'
+        //     } 
             // steps {
                 // sh 'curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-17.04.0-ce.tgz \
                 //     && tar xzvf docker-17.04.0-ce.tgz \
@@ -59,17 +59,17 @@ pipeline {
             // steps {
             //     echo '$IMAGE_TAG'
             // }
-        }
-        stage('Build Docker Image') {
-            // environment {
-            //     BUILD_NUMBER = 'v1'
-            // }
-            steps{
-                // sh 'docker build -t lancn1/springboot-jenkins:$BUILD_NUMBER .'
-                sh 'docker build -t lancn1/springboot-jenkins .'
-                echo 'Build Image Completed'
-            }
-        }
+        // }
+        // stage('Build Docker Image') {
+        //     // environment {
+        //     //     BUILD_NUMBER = 'v1'
+        //     // }
+        //     steps{
+        //         // sh 'docker build -t lancn1/springboot-jenkins:$BUILD_NUMBER .'
+        //         sh 'docker build -t lancn1/springboot-jenkins .'
+        //         echo 'Build Image Completed'
+        //     }
+        // }
         // stage('Login to Docker Hub') {
      	//     environment {
         //         BUILD_NUMBER = 'v1'
