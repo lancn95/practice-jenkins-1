@@ -27,10 +27,14 @@ pipeline {
             }
         }
         stage('SonarQube Quality Check') {
-            withSonarQubeEnv(installationName: 'sonar-community', credentialsId: 'jenkins-sonar-token') {
-            sh 'mvn sonar:sonar'
-            } // submitted SonarQube taskId is automatically attached to the pipeline context
-        }
+            steps {
+                script {
+                     withSonarQubeEnv(installationName: 'sonar-community', credentialsId: 'jenkins-sonar-token') {
+                        sh 'mvn sonar:sonar'
+                        } // submitted SonarQube taskId is automatically attached to the pipeline context
+                    }
+                }
+            }
         stage('Show image tag'){
             steps {
                 script {
